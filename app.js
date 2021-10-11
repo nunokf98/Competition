@@ -1,10 +1,24 @@
 const nome = "Competição";
 
-class Competition{}
+class Competition{ // Criar classe
+    name;
+    startDate;
+    endDate;
+}  
+class Team{
+    name;
+    points;
+}
 
-class Team{}
+class Match{
+    homeTeam;
+    awayTeam;
+    location;
+    result;
+}
 
-class Match{}
-
-class Ranking{}
+class Ranking{
+    team;
+    position;
+}
 
