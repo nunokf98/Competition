@@ -51,12 +51,16 @@ class Match{
 class Ranking{
     competition
     team;
-    position;
+    #position;
 
     constructor(competition, team, position) {
         this.competition = competition;
         this.team = team
         this.position = position;;
+    }
+
+    set Position(NewPosition) {
+        this.position = NewPosition;
     }
 
     toString() {
