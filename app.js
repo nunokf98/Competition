@@ -1,3 +1,5 @@
+const nome = "Competição";
+
 class Competition{}
 
 class Team{}
