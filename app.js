@@ -4,6 +4,9 @@ class Competition{ // Criar classe
     name;
     startDate;
     endDate;
+    teams = [];
+    matches = [];
+    ranking = [];
 
 
     constructor(name, startDate,endDate) {
@@ -12,18 +15,39 @@ class Competition{ // Criar classe
         this.endDate = endDate;
     }
 
+    addTeam(teamName) {
+        this.teams.push(new Team(teamName));
+    }
+
+    addMatch(homeTeam, awayTeam, location, result) {
+        this.matches.push(new Match(homeTeam,awayTeam,location,result));
+    }
+
+    get showTeams() {
+        for (let pos = 0; pos < this.teams.length; pos++) {
+            teamsList = teamslist + ' <br> ' + teams[pos];
+        }
+        return teamsList;    
+    }
+
     toString() {
         return `${this.name} - (${this.startDate}) (${this.endDate})`;
     }
 }  
 class Team{
-    competition;
     name;
-    points;
+    #points;
 
-    constructor(competition,name) {
-        this.competition = competition;
+    constructor(name) {
         this.name = name;
+    }
+
+    set Points(newPoints) {
+        this.#points = newPoints;
+    }
+
+    get CurrentPoints() {
+        return `${this.#points}`
     }
 
     toString() {
@@ -33,34 +57,35 @@ class Team{
 }
 
 class Match{
-    competition;
     homeTeam;
     awayTeam;
     location;
     result;
 
-    constructor(competition,homeTeam, awayTeam,location)
+    constructor(homeTeam, awayTeam,location, result)
     {
-        this.competition = competition;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.location = location;
+        this.result = result;
     }
 }
 
 class Ranking{
-    competition
     team;
     #position;
 
-    constructor(competition, team, position) {
-        this.competition = competition;
+    constructor(team, position) {
         this.team = team
-        this.position = position;;
+        this.position = position;
     }
 
     set Position(NewPosition) {
-        this.position = NewPosition;
+        this.#position = NewPosition;
+    }
+
+    get TeamPosition() {
+        return `${this.#position}`;
     }
 
     toString() {
