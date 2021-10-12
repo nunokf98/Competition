@@ -1,4 +1,4 @@
-const competitionManager = {
+export const competitionManager = {
     name: "Gestor de Competições"
 }
 
@@ -6,7 +6,7 @@ class Competition{ // Criar classe
     name;
     startDate;
     endDate;
-    #teams = [];
+    teams = [];
     #matches = [];
 
 
@@ -17,26 +17,52 @@ class Competition{ // Criar classe
     }
 
     addTeam(teamName) {
-        this.#teams.push(new Team(teamName));
+        this.teams.push(new Team(teamName));
     }
 
     getTeam(teamName) {
-        for(let pos = 0; pos < this.#teams.length; pos++) {
-            if(this.#teams[pos].name == teamName) {
-                return this.#teams[pos]
+        for(let pos = 0; pos < this.teams.length; pos++) {
+            if(this.teams[pos].name == teamName) {
+                return this.teams[pos]
             }
         }
         return 0;
     }
 
-    addMatch(homeTeam, awayTeam, location, result) {
-        this.#matches.push(new Match(homeTeam,awayTeam,location,result));
+    addMatch(homeTeam, awayTeam, location, winner) { // add a match and give 3 points to the winner
+        this.#matches.push(new Match(homeTeam,awayTeam,location,winner));
+        let winnerTeam = this.getTeam(winner.name);
+        winnerTeam.points = 3;
+        if(this.searchteam(winnerTeam.name) >= 0) {
+            this.teams[this.searchteam(winnerTeam.name)] = winnerTeam;
+        }
+        this.teams.sort(this.compare);
+    }
+
+
+    searchteam(teamName) {
+        for(let pos = 0; pos < this.teams.length; pos++) {
+            if(this.teams[pos].name == teamName) {
+                return pos
+            }
+        }
+        return -1;
+    }
+
+    compare( a, b ) {
+        if ( a.points < b.points ){
+          return -1;
+        }
+        if ( a.points > b.points ){
+          return 1;
+        }
+        return 0;
     }
 
     get showTeams() {
         let teamsList = '';
-        for (let pos = 0; pos < this.#teams.length; pos++) {
-            teamsList = teamsList + ' <br> ' + this.#teams[pos].toString();
+        for (let pos = 0; pos < this.teams.length; pos++) {
+            teamsList = teamsList + ' <br> ' + this.teams[pos].toString();
         }
         return teamsList;    
     }
@@ -49,19 +75,12 @@ class Competition{ // Criar classe
 }  
 class Team{
     name;
-    #points;
+    points;
     #position;
 
     constructor(name) {
         this.name = name;
-    }
-
-    set addPoints(newPoints) {
-        this.#points = newPoints;
-    }
-
-    get CurrentPoints() {
-        return `${this.#points}`
+        this.points = 0;
     }
 
     set rankingPosition(newPosition) {
@@ -116,7 +135,7 @@ class Ranking{
 }
 
 
-const competicao1 = new Competition('Competição1','01/01/2021', '01/12/2021');
+const competicao1 = new Competition('Competição1',new Date(2021,1,1), new Date(2021,12,1));
 
 competicao1.addTeam('FC Porto')
 competicao1.addTeam('SL Benfica')
@@ -132,7 +151,7 @@ competicao1.addMatch(equipa1, equipa2, 'Porto', equipa1)
 competicao1.addMatch(equipa3, equipa4, 'Lisboa', equipa4)
 
 
-const competicao2 = new Competition('Competição2','01/09/2021', '31/12/2021');
+const competicao2 = new Competition('Competição2',new Date(2021,9,1), new Date(2021,12,31));
 
 competicao2.addTeam('A')
 competicao2.addTeam('B')
