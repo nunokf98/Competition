@@ -12,16 +12,60 @@
 <body>
     <h1>Gestor de Competições</h1>
     <p>As versões da app ilustram os conceitos explicados nos slides.</p>
-    <table>
-        <thead>
-            <th>Competição</th>
-            <th>Data de Início</th>
-            <th>Data de Fim</th>
-        </thead>
-        <tbody id="competitions">
-            <!-- Será preechido por JavaScript -->
-        </tbody>
+    <div style="width: 50%;">
+        <h5>Competições Disponiveis</h5>
+        <table style="width: 50%;">
+            <thead>
+                <tr>
+                    <th>Competição</th>
+                    <th>Data de Início</th>
+                    <th>Data de Fim</th>
+                </tr>
+            </thead>
+            <tbody id="competitions"></tbody>
     </table>
+    </div>
+    <div style="width: 50%;">
+        <h5>Nova Competição</h5>
+        <form id="competicao">
+            <table>
+                <tr>
+                    <td><label>Competição</label></td>
+                    <td><input name="name" type="text" placeholder="Nome da Competição" required /></td>
+                </tr>
+                <tr>
+                    <td><label>Data de Início</label></td>
+                    <td><input name="startDate" type="date" placeholder="Data de Início da Competição" required /></td>
+                </tr>
+                <tr>
+                    <td><label>Data de Fim</label></td>
+                    <td><input name="endDate" type="date" placeholder="Data de Fim da Competição" required /></td>
+                </tr>
+            </table>
+            <button type="submit">Criar Competição</button>
+        </form>
+    </div>
+
+    <div style="width: 50%;">
+        <h5>Nova Equipa</h5>
+        <form id="equipa">
+            <table>
+                <tr>
+                    <td><label>Competição</label></td>
+                    <td>                    
+                        <select name="competicao_equipa" required>
+                            <!-- Preenchido por JavaScript-->
+                        </select> 
+                    </td>
+                </tr>
+                <tr>
+                    <td><label>Nome</label></td>
+                    <td><input name="team_name" type="text" placeholder="Nome da Equipa" required /></td>
+                </tr>
+            </table>
+            <button type="submit">Criar Equipa</button>
+        </form>
+    </div>
 
     <div id="teams"></div>
 </body>

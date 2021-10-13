@@ -2,7 +2,7 @@ export const competitionManager = {
     name: "Gestor de Competições"
 }
 
-class Competition{ // Criar classe
+export class Competition{ // Criar classe
     name;
     startDate;
     endDate;
@@ -112,29 +112,6 @@ class Match{
     }
 }
 
-class Ranking{
-    team;
-    #position;
-
-    constructor(team, position) {
-        this.team = team
-        this.position = position;
-    }
-
-    set addPosition(NewPosition) {
-        this.#position = NewPosition;
-    }
-
-    get teamPosition() {
-        return `${this.#position}`;
-    }
-
-    toString() {
-        return `${this.team} - ${this.position}`;
-    }
-}
-
-
 const competicao1 = new Competition('Competição1',new Date(2021,1,1), new Date(2021,12,1));
 
 competicao1.addTeam('FC Porto')
@@ -178,3 +155,13 @@ competicoes.set(competicao2.name,competicao2);
 Object.defineProperties(competitionManager, {
     competitions: { value: competicoes, writable: false} 
 });
+
+competitionManager.addNewTeam = function (competitionName,name) {
+    const competition = competitions.find(competition => competition.name === competitionName); // Sintaxe mais concisa, que define o método de procura "em situ" como uma "arrow function" ("lambda")
+    competition.addTeam(name);
+    for (let i = 0;  i < competitionManager.competitions.length(); i++) {
+        if(competitionManager.competitions[i].name == competitionName) {
+            competitionManager.competitions[i] = competition;
+        }
+    }
+}
